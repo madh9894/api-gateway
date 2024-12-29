@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  summarizer:
+    build: ../summarizer
+    container_name: summarizer
+    ports:
+      - "5003:5003"
+
+  ar2en:
+    build: ../AR2EN
+    container_name: ar2en
+    ports:
+      - "5002:5002"
+
+  en2ar:
+    build: ../EN2AR
+    container_name: en2ar
+    ports:
+      - "5001:5001"
+
+  api-gateway:
+    build: .
+    container_name: gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - summarizer
+      - ar2en
+      - en2ar
